@@ -1,4 +1,4 @@
-class Pages::MyApp::MyFirstPage < Page::Cell::Page
+class Pages::MyApp::MyFirstPage < Matestack::Page
 
   def response
     components {

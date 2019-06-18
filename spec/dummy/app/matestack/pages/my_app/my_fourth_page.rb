@@ -1,4 +1,4 @@
-class Pages::MyApp::MyFourthPage < Page::Cell::Page
+class Pages::MyApp::MyFourthPage < Matestack::Page
 
   def prepare
     @dummy_model = DummyModel.new

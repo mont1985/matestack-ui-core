@@ -1,4 +1,4 @@
-class Pages::MyApp::MySecondPage < Page::Cell::Page
+class Pages::MyApp::MySecondPage < Matestack::Page
 
   def prepare
     @technologies = ["Rails", "Vue.js", "Trailblazer", "Rspec", "Capybara"]
