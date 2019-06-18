@@ -39,7 +39,7 @@ describe "Component", type: :feature, js: true do
       module Component1::Cell end
 
       #defined in component1/cell/component1.rb
-      class Component1::Cell::Component1 < Component::Cell::Static
+      class Component1::Cell::Component1 < Matestack::StaticComponent
 
         def response
           components {
@@ -51,7 +51,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -78,7 +78,7 @@ describe "Component", type: :feature, js: true do
       module Namespace1::Cell end
 
       #defined in namespace1/cell/component1.rb
-      class Namespace1::Cell::Component1 < Component::Cell::Static
+      class Namespace1::Cell::Component1 < Matestack::StaticComponent
 
         def response
           components {
@@ -91,7 +91,7 @@ describe "Component", type: :feature, js: true do
       end
 
       #defined in namespace1/cell/component2.rb
-      class Namespace1::Cell::Component2 < Component::Cell::Static
+      class Namespace1::Cell::Component2 < Matestack::StaticComponent
 
         def response
           components {
@@ -103,7 +103,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -130,7 +130,7 @@ describe "Component", type: :feature, js: true do
       module MyComponent::Cell end
 
       #defined in my_component/cell/my_component.rb
-      class MyComponent::Cell::MyComponent < Component::Cell::Static
+      class MyComponent::Cell::MyComponent < Matestack::StaticComponent
 
         def response
           components {
@@ -142,7 +142,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -169,7 +169,7 @@ describe "Component", type: :feature, js: true do
       module Components::MyComponent::Cell end
 
       #defined in app/matestack/components/my_component/cell/my_component.rb
-      class Components::MyComponent::Cell::MyComponent < Component::Cell::Static
+      class Components::MyComponent::Cell::MyComponent < Matestack::StaticComponent
 
         def response
           components {
@@ -182,7 +182,7 @@ describe "Component", type: :feature, js: true do
       end
 
       #defined in app/matestack/components/my_component/cell/my_second_component.rb
-      class Components::MyComponent::Cell::MySecondComponent < Component::Cell::Static
+      class Components::MyComponent::Cell::MySecondComponent < Matestack::StaticComponent
 
         def response
           components {
@@ -194,7 +194,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -218,9 +218,9 @@ describe "Component", type: :feature, js: true do
 
   describe "static vs dynamic components" do
 
-    it "can render static content without any javascript involved if inherit from 'Component::Cell::Static'" do
+    it "can render static content without any javascript involved if inherit from 'Matestack::StaticComponent'" do
 
-      class Static::Cell::Component < Component::Cell::Static
+      class Static::Cell::Component < Matestack::StaticComponent
 
         def response
           components {
@@ -232,7 +232,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -254,7 +254,7 @@ describe "Component", type: :feature, js: true do
 
     it "pages can use async component to wrap static components and add basic dynamic behaviour" do
 
-      class Static::Cell::Component < Component::Cell::Static
+      class Static::Cell::Component < Matestack::StaticComponent
 
         def response
           components {
@@ -267,7 +267,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -299,9 +299,9 @@ describe "Component", type: :feature, js: true do
 
     end
 
-    it "components can render dynamic content with vue.js involved if inherit from 'Component::Cell::Dynamic'" do
+    it "components can render dynamic content with vue.js involved if inherit from 'Matestack::DynamicComponent'" do
 
-      class Dynamic::Cell::Component < Component::Cell::Dynamic
+      class Dynamic::Cell::Component < Matestack::DynamicComponent
 
         def response
           components {
@@ -333,7 +333,7 @@ describe "Component", type: :feature, js: true do
 
       javascript
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -376,7 +376,7 @@ describe "Component", type: :feature, js: true do
 
     it "components can take a options hash" do
 
-      class Static::Cell::Component < Component::Cell::Static
+      class Static::Cell::Component < Matestack::StaticComponent
 
         def response
           components {
@@ -388,7 +388,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def prepare
           @hello = "hello!"
@@ -412,7 +412,7 @@ describe "Component", type: :feature, js: true do
 
     it "components can auto validate if options is given and raise error if not" do
 
-      class Static::Cell::SpecialComponent < Component::Cell::Static
+      class Static::Cell::SpecialComponent < Matestack::StaticComponent
 
         REQUIRED_KEYS = [:some_option]
 
@@ -426,7 +426,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -452,7 +452,7 @@ describe "Component", type: :feature, js: true do
 
     it "a page can fill slots of components with access to page instance scope" do
 
-      class Static::Cell::Component < Component::Cell::Static
+      class Static::Cell::Component < Matestack::StaticComponent
 
         def prepare
           @foo = "foo from component"
@@ -469,7 +469,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def prepare
           @foo = "foo from page"
@@ -526,7 +526,7 @@ describe "Component", type: :feature, js: true do
 
     it "a component can fill slots of components with access to component instance scope" do
 
-      class Static::Cell::Component < Component::Cell::Static
+      class Static::Cell::Component < Matestack::StaticComponent
 
         def prepare
           @foo = "foo from component"
@@ -553,7 +553,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class Static::Cell::OtherComponent < Component::Cell::Static
+      class Static::Cell::OtherComponent < Matestack::StaticComponent
 
         def prepare
           @foo = "foo from other component"
@@ -571,7 +571,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def prepare
           @foo = "foo from page"
@@ -625,7 +625,7 @@ describe "Component", type: :feature, js: true do
 
     it "components can yield a block with access to scope, where block is defined" do
 
-      class Static::Cell::Component < Component::Cell::Static
+      class Static::Cell::Component < Matestack::StaticComponent
 
         def response
           components {
@@ -637,7 +637,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def prepare
           @foo = "foo from page"
@@ -667,7 +667,7 @@ describe "Component", type: :feature, js: true do
 
     it "components can use local partials to structure their response" do
 
-      class Static::Cell::Component < Component::Cell::Static
+      class Static::Cell::Component < Matestack::StaticComponent
 
         def response
           components {
@@ -685,7 +685,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -715,7 +715,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class Static::Cell::Component < Component::Cell::Static
+      class Static::Cell::Component < Matestack::StaticComponent
 
         include MySharedPartials
 
@@ -729,7 +729,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -753,7 +753,7 @@ describe "Component", type: :feature, js: true do
 
     it "a component can access a simple argument, if no hash was given" do
 
-      class Static::Cell::Component < Component::Cell::Static
+      class Static::Cell::Component < Matestack::StaticComponent
 
         def response
           components {
@@ -765,7 +765,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -789,7 +789,7 @@ describe "Component", type: :feature, js: true do
 
     it "a component can resolve data before rendering in a prepare method" do
 
-      class Static::Cell::Component < Component::Cell::Static
+      class Static::Cell::Component < Matestack::StaticComponent
 
         def prepare
           @some_data = "some data"
@@ -805,7 +805,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {
@@ -829,7 +829,7 @@ describe "Component", type: :feature, js: true do
 
     it "a component can access request informations" do
 
-      class Static::Cell::Component < Component::Cell::Static
+      class Static::Cell::Component < Matestack::StaticComponent
 
         def response
           components {
@@ -841,7 +841,7 @@ describe "Component", type: :feature, js: true do
 
       end
 
-      class ExamplePage < Page::Cell::Page
+      class ExamplePage < Matestack::Page
 
         def response
           components {

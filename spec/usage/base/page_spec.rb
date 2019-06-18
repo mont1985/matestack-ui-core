@@ -12,7 +12,7 @@ describe "Page", type: :feature, js: true do
 
   it "orchestrates components and can be used as a controller action response" do
 
-    class ExamplePage < Page::Cell::Page
+    class ExamplePage < Matestack::Page
 
       def response
         components {
@@ -44,7 +44,7 @@ describe "Page", type: :feature, js: true do
 
   it "can access controller instance variables" do
 
-    class ExamplePage < Page::Cell::Page
+    class ExamplePage < Matestack::Page
 
       def response
         components {
@@ -83,7 +83,7 @@ describe "Page", type: :feature, js: true do
 
   it "can access request informations" do
 
-    class ExamplePage < Page::Cell::Page
+    class ExamplePage < Matestack::Page
 
       def response
         components {
@@ -116,7 +116,7 @@ describe "Page", type: :feature, js: true do
 
   it "can structure the response using local partials" do
 
-    class ExamplePage < Page::Cell::Page
+    class ExamplePage < Matestack::Page
 
       def response
         components {
@@ -210,7 +210,7 @@ describe "Page", type: :feature, js: true do
 
     end
 
-    class ExamplePage < Page::Cell::Page
+    class ExamplePage < Matestack::Page
 
       include MySharedPartials
 
@@ -293,7 +293,7 @@ describe "Page", type: :feature, js: true do
     module Example::Cell
     end
 
-    class Example::Cell::Component < Component::Cell::Static
+    class Example::Cell::Component < Matestack::StaticComponent
 
       def prepare
         @foo = "foo from component"
@@ -311,7 +311,7 @@ describe "Page", type: :feature, js: true do
 
     end
 
-    class ExamplePage < Page::Cell::Page
+    class ExamplePage < Matestack::Page
 
       def prepare
         @foo = "foo from page"

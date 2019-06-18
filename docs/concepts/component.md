@@ -10,14 +10,14 @@ In the beginning, static components are introduced. Later, dynamic components fo
 
 ## Static components
 
-All static components inherit from the `Component::Cell::Static` class and get rendered without any javascript involved.
+All static components inherit from the `Matestack::StaticComponent` class and get rendered without any javascript involved.
 
 ### A simple static component
 
 Define the component in `app/matestack/components/component1/cell/component1.rb` like so
 
 ```ruby
-class Component1::Cell::Component1 < Component::Cell::Static
+class Component1::Cell::Component1 < Matestack::StaticComponent
 
   def response
     components {
@@ -33,7 +33,7 @@ end
 and add it to the response part of an Example Page that lives somewhere in `app/matestack/pages/example_app/example_page.rb`
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def response
     components {
@@ -62,7 +62,7 @@ This will get rendered into
 Define the first component in `app/matestack/components/namespace1/cell/component1.rb`
 
 ```ruby
-class Namespace1::Cell::Component1 < Component::Cell::Static
+class Namespace1::Cell::Component1 < Matestack::StaticComponent
 
   def response
     components {
@@ -78,7 +78,7 @@ end
 and define a second component in the same namespace: `app/matestack/components/namespace1/cell/component2.rb`
 
 ```ruby
-class Namespace1::Cell::Component2 < Component::Cell::Static
+class Namespace1::Cell::Component2 < Matestack::StaticComponent
 
   def response
     components {
@@ -94,7 +94,7 @@ end
 then add both components to the response part of the Example Page in `app/matestack/pages/example_app/example_page.rb`
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
    def response
      components {
@@ -133,7 +133,7 @@ Components named in camelcase  are referenced to with their downcased counterpar
 As an example, define the camelcased component in `app/matestack/components/my_component/cell/my_component.rb`
 
 ```ruby
-class MyComponent::Cell::MyComponent < Component::Cell::Static
+class MyComponent::Cell::MyComponent < Matestack::StaticComponent
 
   def response
     components {
@@ -149,7 +149,7 @@ end
 and add it to the response part of the Example Page (`app/matestack/pages/example_app/example_page.rb`, remember?) via *downcased reference*
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def response
     components {
@@ -176,14 +176,14 @@ As expected, it will get rendered into
 
 ## Dynamic components
 
-So far, all custom components were static ones. Reminder: All components that inherit from `Component::Cell::Static` get rendered without any javascript involved. But static components can also be wrapped inside dynamic components to create, well, dynamic behavior!
+So far, all custom components were static ones. Reminder: All components that inherit from `Matestack::StaticComponent` get rendered without any javascript involved. But static components can also be wrapped inside dynamic components to create, well, dynamic behavior!
 
 ### Async wrapper to add basic dynamic behavior
 
 Create a custom *static* component in `app/matestack/components/static/cell/component.rb`
 
 ```ruby
-class Static::Cell::Component < Component::Cell::Static
+class Static::Cell::Component < Matestack::StaticComponent
 
   def response
     components {
@@ -200,7 +200,7 @@ end
 and add it to the Example Page, wrapping it into an *async component* to make it *dynamic*! The *async component* is a core component and therefore does not need a *custom_* prefix.
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def response
     components {
@@ -222,10 +222,10 @@ Now, the page will respond with static content, but gets rerendered (visible by 
 To create a custom dynamic component, create an associated file such as `app/matestack/components/dynamic/cell/component.rb`.
 
 
-In contrast to static components that inherit from `Component::Cell::Static`, a custom dynamic component inherits from *a different class*, `Component::Cell::Dynamic`:
+In contrast to static components that inherit from `Matestack::StaticComponent`, a custom dynamic component inherits from *a different class*, `Matestack::DynamicComponent`:
 
 ```ruby
-class Dynamic::Cell::Component < Component::Cell::Dynamic
+class Dynamic::Cell::Component < Matestack::DynamicComponent
 
   def response
     components {
@@ -260,7 +260,7 @@ MatestackUiCore.Vue.component('dynamic-component-cell', {
 Add the dynamic component to an example page the same way it is done with static components:
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def response
     components {
@@ -298,7 +298,7 @@ By passing options to a component, they get very flexible and can take various i
 As before, create a component in it's respective file, in this case `app/matestack/components/static/cell/component.rb`:
 
 ```ruby
-class Static::Cell::Component < Component::Cell::Static
+class Static::Cell::Component < Matestack::StaticComponent
 
   def response
     components {
@@ -314,7 +314,7 @@ end
 On the example page, directly pass the options to the static component as shown below:
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def prepare
     @hello = "hello!"
@@ -346,7 +346,7 @@ The outcome is quite as expected:
 This feature is pretty straightforward - just declare the options as a required key in the component config!
 
 ```ruby
-class Static::Cell::SpecialComponent < Component::Cell::Static
+class Static::Cell::SpecialComponent < Matestack::StaticComponent
 
   REQUIRED_KEYS = [:some_option]
 
@@ -364,7 +364,7 @@ end
 Notice that this example *does not* pass the required option to the component on the example page, provoking an error message:
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def response
     components {
@@ -396,7 +396,7 @@ Similar to named slots in Vue.js, slots in Matestack allow for useful placeholde
 Define the slots within the component file as shown below:
 
 ```ruby
-class Static::Cell::Component < Component::Cell::Static
+class Static::Cell::Component < Matestack::StaticComponent
 
   def prepare
     @foo = "foo from component"
@@ -418,7 +418,7 @@ end
 Passing arguments for those slots on the example page works very similar to the options introduced above:
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def prepare
     @foo = "foo from page"
@@ -472,7 +472,7 @@ This gets rendered into HTML as shown below. Notice that the `@foo` from the com
 To use *component instance scope slots*, first define slots within a static component:
 
 ```ruby
-class Static::Cell::Component < Component::Cell::Static
+class Static::Cell::Component < Matestack::StaticComponent
 
   def prepare
     @foo = "foo from component"
@@ -503,7 +503,7 @@ end
 And another component:
 
 ```ruby
-class Static::Cell::OtherComponent < Component::Cell::Static
+class Static::Cell::OtherComponent < Matestack::StaticComponent
 
   def prepare
     @foo = "foo from other component"
@@ -527,7 +527,7 @@ end
 Then, put both components to use on the example page:
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def prepare
     @foo = "foo from page"
@@ -579,7 +579,7 @@ This may seem complicated at first, but it can provide valuable freedom of confi
 Components can yield a block with access to scope, where a block is defined. This works the way *yield* usually works in Ruby. But make sure to explicitly call *'yield_components'* within the component configuration!
 
 ```ruby
-class Static::Cell::Component < Component::Cell::Static
+class Static::Cell::Component < Matestack::StaticComponent
 
   def response
     components {
@@ -595,7 +595,7 @@ end
 Pass a block to a component on the page as shown below:
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def prepare
     @foo = "foo from page"
@@ -633,7 +633,7 @@ Use partials to keep the code dry and indentation layers manageable!
 In the component definition, see how this time from inside the response, the `my_partial` method below is called:
 
 ```ruby
-class Static::Cell::Component < Component::Cell::Static
+class Static::Cell::Component < Matestack::StaticComponent
 
   def response
     components {
@@ -655,7 +655,7 @@ end
 As everything is already defined in the component, calling the `custom_static_component` on the example page is all there is to do:
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def response
     components {
@@ -697,7 +697,7 @@ end
 Include the module in the component created in `app/matestack/components/component/cell/static.rb` as shown below:
 
 ```ruby
-class Static::Cell::Component < Component::Cell::Static
+class Static::Cell::Component < Matestack::StaticComponent
 
   include MySharedPartials
 
@@ -715,7 +715,7 @@ end
 Then reference the component on the example page as before:
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def response
     components {
@@ -745,7 +745,7 @@ Try combining partials with options and slots for maximum readability, dryness a
 If no hash was given, a component can also access/accept a simple argument!
 
 ```ruby
-class Static::Cell::Component < Component::Cell::Static
+class Static::Cell::Component < Matestack::StaticComponent
 
   def response
     components {
@@ -761,7 +761,7 @@ end
 Just make sure to pass an argument on the example page:
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def response
     components {
@@ -790,7 +790,7 @@ No miracle to find here, just what was expected!
 Use a prepare method to resolve data before rendering a component!
 
 ```ruby
-  class Static::Cell::Component < Component::Cell::Static
+  class Static::Cell::Component < Matestack::StaticComponent
 
     def prepare
       @some_data = "some data"
@@ -810,7 +810,7 @@ Use a prepare method to resolve data before rendering a component!
 In this example, the `@some_data` overwrites the `"foo from page"`-string passed on the example page:
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def response
     components {
@@ -840,7 +840,7 @@ The prepare method comes in handy to read from the database or to modify content
 A component can also access request information, e.g. by reading the `@url_params`. Do this in the component defined below:
 
 ```ruby
-class Static::Cell::Component < Component::Cell::Static
+class Static::Cell::Component < Matestack::StaticComponent
 
   def response
     components {
@@ -856,7 +856,7 @@ end
 On the example page, reference the component as usual.
 
 ```ruby
-class Pages::ExamplePage < Page::Cell::Page
+class Pages::ExamplePage < Matestack::Page
 
   def response
     components {

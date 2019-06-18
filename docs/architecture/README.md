@@ -13,7 +13,7 @@ In order to better understand the core architecture, we will often refer to the 
 Our App: `app/matestack/apps/my_app.rb`
 
 ```ruby
-class Apps::MyApp < App::Cell::App
+class Apps::MyApp < Matestack::App
 
   def response
     components{
@@ -44,7 +44,7 @@ end
 Our first Page: `app/matestack/pages/my_app/my_first_page.rb`
 
 ```ruby
-class Pages::MyApp::MyFirstPage < Page::Cell::Page
+class Pages::MyApp::MyFirstPage < Matestack::Page
 
   def response
     components{
@@ -60,7 +60,7 @@ end
 Our second Page: `app/matestack/pages/my_app/my_second_page.rb`
 
 ```ruby
-class Pages::MyApp::MySecondPage < Page::Cell::Page
+class Pages::MyApp::MySecondPage < Matestack::Page
 
   def response
     components{
@@ -277,7 +277,7 @@ All top-level nodes of a Component gets translated to a corresponding Component 
 In contrast to a Page or App, a Component may be called with a block:
 
 ```ruby
-class Pages::MyApp::MyFirstPage < Page::Cell::Page
+class Pages::MyApp::MyFirstPage < Matestack::Page
 
   def response
     components{
